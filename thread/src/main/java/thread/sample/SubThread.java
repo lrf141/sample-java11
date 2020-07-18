@@ -1,8 +1,10 @@
 package thread.sample;
 
-public class SubThread extends Thread {
+public class SubThread implements Runnable {
+
     @Override
     public void run() {
-        System.out.println("Call from " + getName());
+        System.out.println("Call from " + Thread.currentThread().getName());
     }
+
 }

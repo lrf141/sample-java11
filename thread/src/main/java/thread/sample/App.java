@@ -6,7 +6,7 @@ package thread.sample;
 public class App {
 
     public static void main(String[] args) {
-        Thread thread1 = new SubThread();
+        Thread thread1 = new Thread(new SubThread());
         thread1.start();
     }
 }
