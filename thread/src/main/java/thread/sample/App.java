@@ -3,12 +3,30 @@
  */
 package thread.sample;
 
+import java.util.concurrent.*;
+
 public class App {
 
     public static void main(String[] args) {
-        Thread thread1 = new Thread(new SubThread());
-        Thread thread2 = new Thread(new SubThread());
-        thread1.start();
-        thread2.start();
+
+        ExecutorService exec = Executors.newFixedThreadPool(8);
+
+        Future<Integer> res1 = exec.submit(new SubThread());
+        Future<Integer> res2 = exec.submit(new SubThread());
+
+        try {
+            System.out.println("Thread 1: " + res1.get());
+            System.out.println("Thread 2: " + res2.get());
+        } catch (InterruptedException err1) {
+            err1.printStackTrace();
+        } catch (ExecutionException err2) {
+            err2.printStackTrace();
+        }
+        exec.shutdown();
+        try {
+            exec.awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException err) {
+            err.printStackTrace();
+        }
     }
 }
